@@ -1,0 +1,8 @@
+
+# Terraform files
+terraform/localstack/.terraform
+terraform/localstack/.terraform.lock.hcl
+terraform/localstack/terraform.tfstate
+
+# Volume file
+volume
