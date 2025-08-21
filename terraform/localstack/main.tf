@@ -23,6 +23,9 @@ variable "s3_bucket" {
     type = string
 }
 
+variable "sqs_queue_name" {
+    type = string
+}
 
 provider "aws" {
     access_key = var.access_key
@@ -35,9 +38,10 @@ provider "aws" {
     skip_metadata_api_check = true
     skip_requesting_account_id = true
 
-    # เปลี่ยนปลายทาง (endpoint) การเชื่อมต่อสำหรับบริการ S3 ให้ชี้ไปที่ URL ของ LocalStack
+    # เปลี่ยนปลายทาง (endpoint) การเชื่อมต่อสำหรับบริการ S3, SQS ให้ชี้ไปที่ URL ของ LocalStack
     endpoints {
       s3 = var.s3_localstack_endpoint
+      sqs = var.localstack_endpoint
     }
 }
 
@@ -45,4 +49,12 @@ provider "aws" {
 resource "aws_s3_bucket" "test-bucket" {
   # ตั้งชื่อ S3 bucket ที่จะถูกสร้างขึ้นจริงบน LocalStack
   bucket = var.s3_bucket
+}
+
+resource "aws_sqs_queue" "terraform_queue" {
+  name                      = var.sqs_queue_name
+  delay_seconds             = 90
+  max_message_size          = 2048
+  message_retention_seconds = 86400
+  receive_wait_time_seconds = 10
 }

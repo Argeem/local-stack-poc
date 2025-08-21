@@ -3,6 +3,11 @@
 terraform/localstack/.terraform
 terraform/localstack/.terraform.lock.hcl
 terraform/localstack/terraform.tfstate
+terraform/localstack/terraform.tfstate.backup
 
 # Volume file
 volume
+
+# go module
+go.mod
+go.sum
